@@ -12,9 +12,10 @@
 <div class="container">
 <c:forEach var="ad" items="${ads}">
     <div class="col-md-6">
+        <h3>Title: $ ${ad.title}</h3>
         <p>Id: ${ad.id}</p>
         <p>UserId: $ ${ad.userId}</p>
-        <p>Title: $ ${ad.title}</p>
+
         <p>Description: $ ${ad.description}</p>
 
     </div>
