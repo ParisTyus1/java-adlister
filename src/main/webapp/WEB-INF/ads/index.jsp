@@ -4,10 +4,10 @@
 <html>
 <head>
     <title>View Products</title>
-    <jsp:include page="/partials/head.jsp"/>
+    <jsp:include page="/WEB-INF/partials/head.jsp"/>
 </head>
 <body>
-<jsp:include page="/partials/navbar.jsp" />
+<jsp:include page="/WEB-INF/partials/navbar.jsp" />
 <h1>Here are all the ads!</h1>
 <div class="container">
 <c:forEach var="ad" items="${ads}">

@@ -8,5 +8,4 @@
             <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
         </ul>
     </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
 </nav>
