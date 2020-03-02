@@ -6,6 +6,7 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="${pageContext.request.contextPath}/login">Login</a></li>
+            <li><a href="${pageContext.request.contextPath}/logout">Logout</a></li>
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
