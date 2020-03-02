@@ -15,7 +15,6 @@
         <h3>Title: $ ${ad.title}</h3>
         <p>Id: ${ad.id}</p>
         <p>UserId: $ ${ad.userId}</p>
-
         <p>Description: $ ${ad.description}</p>
 
     </div>

@@ -18,8 +18,11 @@ public class LoginServlet extends HttpServlet {
         if (request.getMethod().equalsIgnoreCase("post")) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        if (username.equals("admin") && password.equals("password")) {
-            response.sendRedirect("/profile");
+        if (username != null && username.equals("admin") && password!=null && password.equals("password")) {
+            response.sendRedirect("./profile");
+        }else {
+            request.getRequestDispatcher("./login.jsp").forward(request, response);
+
         }
 
 }
