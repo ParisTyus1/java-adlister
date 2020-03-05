@@ -11,7 +11,29 @@ public class ListAdsDao implements Ads {
         return ads;
     }
 
-    public Long insert(Ad ad) {
+//    @Override
+//    public Ad getOne(long id) {
+//        return null;
+//    }
+//
+//    @Override
+//    public boolean update(Ad ad) {
+//        return false;
+//    }
+
+    @Override
+    public boolean delete(long id) {
+        for (Ad ad : ads) {
+            if (ad.getId() == id) {
+                ads.remove(ad);
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    public long insert(Ad ad) {
         // make sure we have ads
         if (ads == null) {
             ads = generateAds();
