@@ -3,6 +3,7 @@ package com.codeup.adlister.dao;
 import com.codeup.adlister.models.Ad;
 import com.mysql.cj.jdbc.Driver;
 
+import javax.servlet.jsp.jstl.core.Config;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,22 +18,27 @@ public class MySQLAdsDao implements Ads {
         try {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(
-                config.getUrl(),
-                config.getUser(),
-                config.getPassword()
+                Config.getUrl(),
+                Config.getUser(),
+                Config.getPassword()
             );
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database!", e);
         }
     }
 
+
     @Override
-    public List<Ad> all() {
-        Statement stmt = null;
+    public List<Ad> all() throws SQLException {
+        String searchTermWithWildcards = "%" + searchTerm + "%";
+        Statement stmt.setString(1, searchTermWithWildcards);
+        String sql = "SELECT * FROM ads WHERE user_id LIKE ?";
+        stmt = connection.prepareStatement(sql);
         try {
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ads");
+            stmt = (PreparedStatement) connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
             return createAdsFromResults(rs);
+            rs.next();
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving all ads.", e);
         }
@@ -41,7 +47,9 @@ public class MySQLAdsDao implements Ads {
     @Override
     public Long insert(Ad ad) {
         try {
-            Statement stmt = connection.createStatement();
+            String sql = "INSERT INTO ads(user_id, title, description) VALUES (?, ?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt = (PreparedStatement) connection.createStatement();
             stmt.executeUpdate(createInsertQuery(ad), Statement.RETURN_GENERATED_KEYS);
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
@@ -52,6 +60,7 @@ public class MySQLAdsDao implements Ads {
     }
 
     private String createInsertQuery(Ad ad) {
+
         return "INSERT INTO ads(user_id, title, description) VALUES "
             + "(" + ad.getUserId() + ", "
             + "'" + ad.getTitle() +"', "
